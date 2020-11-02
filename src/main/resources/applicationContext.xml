@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--开启组件扫描，会将带@service@component等注解的类自动注入-->
+    <context:component-scan base-package="com.jkblog"></context:component-scan>
+
+    <!--用于加载文件，默认只能加载一个，后面的会覆盖前面的！！-->
+    <context:property-placeholder location="classpath:jdbc.properties"></context:property-placeholder>
+
+    <!--使用druid数据库连接池，只配置了基本连接属性-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+    <!--使用mybatis-spring与spring整合，至少需要配置sqlSessionFactory与数据映射器类-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <!--配置mybatis配置文件位置-->
+        <property name="configLocation " value="classpath:mybatis.xml"></property>
+        <property name="mapperLocations" value="classpath:com/jkblog/mapper/*.xml"></property>
+        <!--为实体类定义别名，可以在mapper中不写全类名-->
+        <property name="typeAliasesPackage" value="com.jkblog.bean"></property>
+    </bean>
+
+    <!--spring的事务管理功能，mybatis整合了-->
+    <!--为事务管理器指定的 DataSource 必须和用来创建 SqlSessionFactoryBean 的是同一个数据源，否则事务管理器就无法工作了-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <constructor-arg ref="dataSource"></constructor-arg>
+    </bean>
+
+
+</beans>
