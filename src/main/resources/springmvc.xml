@@ -1,7 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
+	http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <context:component-scan base-package="com.jkblog.controller"></context:component-scan>
+
+    <!--定义静态资源的处理-->
+    <mvc:annotation-driven/>
+    <mvc:default-servlet-handler/>
+
+    <!--    视图解析器-->
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/view/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!--    处理文件上传-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"></property>
+        <property name="maxUploadSize" value="10240000"></property>
+    </bean>
+
+    <!--    配置拦截器-->
+<!--    <mvc:interceptors>
+
+    </mvc:interceptors>-->
+    <!--    配置异常解析器-->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <!--    为所有异常定义默认的处理页面,exceptionMappings未定义的，
+                value表示跳转页面，至于文件路径和后缀已经在 viewResolver 中指定-->
+        <property name="defaultErrorView" value="error"></property>
+        <!--    定义异常处理页面用来获取异常信息的变量名，被存放到 request 域中-->
+        <property name="exceptionAttribute" value="exception"></property>
+        <!--    需要特殊处理的异常，全类名作为key，异常页文件名作为值，可将不同的异常映射到不同的页面上-->
+<!--        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.NullPointerException">nullPointer</prop>
+            </props>
+        </property>-->
+    </bean>
 
 </beans>

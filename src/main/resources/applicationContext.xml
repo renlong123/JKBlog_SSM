@@ -6,7 +6,9 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
     <!--开启组件扫描，会将带@service@component等注解的类自动注入-->
-    <context:component-scan base-package="com.jkblog"></context:component-scan>
+    <context:component-scan base-package="com.jkblog">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
 
     <!--用于加载文件，默认只能加载一个，后面的会覆盖前面的！！-->
     <context:property-placeholder location="classpath:jdbc.properties"></context:property-placeholder>
@@ -23,10 +25,16 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"></property>
         <!--配置mybatis配置文件位置-->
-        <property name="configLocation " value="classpath:mybatis.xml"></property>
+        <property name="configLocation" value="classpath:mybatis.xml"></property>
+        <!--定义mybatis xml文件位置，不是接口-->
         <property name="mapperLocations" value="classpath:com/jkblog/mapper/*.xml"></property>
         <!--为实体类定义别名，可以在mapper中不写全类名-->
         <property name="typeAliasesPackage" value="com.jkblog.bean"></property>
+    </bean>
+
+    <!--定义mapper接口文件所在包，mybatis扫描该包-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.jkblog.mapper"></property>
     </bean>
 
     <!--spring的事务管理功能，mybatis整合了-->

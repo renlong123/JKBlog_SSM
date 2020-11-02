@@ -9,12 +9,6 @@
   <display-name>
     Archetype Created Web Application
   </display-name>
-  
-  <welcome-file-list>
-    <welcome-file>index</welcome-file>
-  </welcome-file-list>
-  
-  
 
   <!--字符编码过滤器，防止post乱码，tomcat8.0以上get不乱码了-->
   <filter>
