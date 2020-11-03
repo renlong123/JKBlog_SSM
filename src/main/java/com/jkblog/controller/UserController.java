@@ -128,4 +128,23 @@ public class UserController {
             return s;
         }
     }
+
+    /**
+     * 用户退出功能
+     * @return
+     */
+    @GetMapping("/loginout")
+    public String userLoginOut(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+        session.removeAttribute("userName");
+        session.removeAttribute("userId");
+
+        /*cookie不能直接删除，需要用相同路径的cookie覆盖掉*/
+        /*cookie名字一样就行*/
+        Cookie cookie = new Cookie("userId","");
+        /*路径一定一致*/
+        cookie.setPath(request.getContextPath()+"/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:index";
+    }
 }

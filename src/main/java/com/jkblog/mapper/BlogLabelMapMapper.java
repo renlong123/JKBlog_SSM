@@ -93,4 +93,6 @@ public interface BlogLabelMapMapper {
      * @mbg.generated Mon Nov 02 23:27:58 CST 2020
      */
     int updateByPrimaryKey(BlogLabelMap record);
+
+    List<BlogLabelMap> selectBlogLabelMapWithLabel(Integer BlogId);
 }

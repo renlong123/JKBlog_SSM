@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: renlo
@@ -44,24 +45,24 @@
 <%@include file="header.jsp" %>
 <div class="container-fluid">
     <h3 class="incenter">
-        <c:if test="${requestScope.blogAllInfo == null}">
+        <c:if test="${requestScope.blog == null}">
             新建博客
         </c:if>
-        <c:if test="${requestScope.blogAllInfo != null}">
+        <c:if test="${requestScope.blog != null}">
             修改博客
         </c:if>
     </h3>
-    <form method="post" action="blogedit" id="addBlogForm">
-        <c:if test="${requestScope.blogAllInfo != null}">
-            <input type="hidden" value="${requestScope.blogAllInfo.blog.blogId}" name="blogId">
+    <form method="post" action="blog/edit" id="addBlogForm">
+        <c:if test="${requestScope.blog != null}">
+            <input type="hidden" value="${requestScope.blog.blogId}" name="blogId">
         </c:if>
         <div class="mb-3">
             <label for="validationTitle">标题</label>
-            <c:if test="${requestScope.blogAllInfo == null}">
+            <c:if test="${requestScope.blog == null}">
                 <input class="form-control" id="validationTitle" placeholder="请输入标题，长度大于2，小于255" required name="blogTitle">
             </c:if>
-            <c:if test="${requestScope.blogAllInfo != null}">
-                <input class="form-control" id="validationTitle" value="${requestScope.blogAllInfo.blog.blogTitle}" required name="blogTitle">
+            <c:if test="${requestScope.blog != null}">
+                <input class="form-control" id="validationTitle" value="${requestScope.blog.blogTitle}" required name="blogTitle">
             </c:if>
             <div class="valid-feedback">
                 Looks good!
@@ -79,11 +80,43 @@
             </select>
             <button class="btn btn-success" type="button" id="categoryAddButton">新增分类</button>
         </div>
+        <div class="mb-3" >
+            <div id="labelForLabel">
+                <label for="validationCategory">标签</label>
+                <button class="btn btn-success btn-sm" type="button" id="labelAddButton">新增标签</button>
+            </div>
+            <div id="labels">
+                <%--${requestScope.labels[0].labelId}--%>
+            </div>
+<%--            <c:if test="${requestScope.labels != null}">
+                <c:forEach items="${requestScope.labels}" var="label" varStatus="i">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="labelId" id="inlineCheckbox1" value="${label.labelId}">
+                        <label class="form-check-label" for="inlineCheckbox1">${label.labelName}</label>
+                    </div>
+                    <c:if test="${i%10==0}">
+                        <br/>
+                    </c:if>
+                </c:forEach>
+            </c:if>--%>
+<%--            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="labelId" id="inlineCheckbox1" value="option1">
+                <label class="form-check-label" for="inlineCheckbox1">1</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="labelId" id="inlineCheckbox2" value="option2">
+                <label class="form-check-label" for="inlineCheckbox2">2</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="labelId" id="inlineCheckbox3" value="option3" disabled>
+                <label class="form-check-label" for="inlineCheckbox3">3 (disabled)</label>
+            </div>--%>
+        </div>
         <div class="mb-3">
             <label for="validationContent">正文</label>
             <div id="div1" id="validationContent" name="blogContent">
                 <%--<p>欢迎使用 <b>Jodit</b> 富文本编辑器，开始写博客吧</p>--%>
-                ${requestScope.blogAllInfo.blog.blogContent}
+                ${requestScope.blog.blogContent}
             </div>
         </div>
         <button class="btn btn-success" type="button" id="addNewBlog">提交</button>
@@ -124,6 +157,40 @@
         </div>
     </div>
 </div>
+<div class="modal" tabindex="-1" role="dialog" id="labelAddModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">新增标签</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                <form id="addLabel">
+                    <div class="form-group row">
+                        <label for="inputLabel" class="col-sm-2 col-form-label">标签名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputLabel" name="categoryName">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputLabelDescription" class="col-sm-2 col-form-label">标签描述</label>
+                        <div class="col-sm-10">
+                            <textarea  class="form-control" id="inputLabelDescription" rows="3" name="categoryDescription"></textarea>
+                        </div>
+                    </div>
+                </form>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="addLabelBtn">新增</button>
+            </div>
+        </div>
+    </div>
+</div>
 <%@include file="footer.jsp" %>
 
 <script type="text/javascript">
@@ -143,11 +210,11 @@
         var blogCategoryId = $("#addBlogForm select[name='blogCategoryId']").val();
         var contents =  editor.txt.html();
 
-        if(${requestScope.blogAllInfo != null}){
-            var blogId = "${requestScope.blogAllInfo.blog.blogId}";
+        if(${requestScope.blog != null}){
+            var blogId = "${requestScope.blog.blogId}";
             $.ajax({
                 type: "POST",
-                url: "blogedit",
+                url: "blog/edit",
                 data: {
                     "blogId": blogId,
                     "blogTitle": blogTitle,
@@ -191,8 +258,52 @@
     /*页面加载完成后加载分类*/
     $(function () {
         getCategoryInfo();
-
+        getLabelInfo();
     });
+
+    function getLabelInfo(){
+        //alert(1);
+        $.ajax({
+            type: "GET",
+            url: "label/get",
+            dataType: "json",
+            success: function (labelList) {
+                //alert(2);
+                updateLabel(labelList);
+            }
+        });
+    }
+
+    /*更新选择*/
+    function updateLabel(labelList){
+        var label = $("#labels");
+
+        label.empty();
+        $.each(labelList,function (name,value) {
+            var items;
+            /*如果是修改，就选择原来的分类*/
+            var isChecked = false;
+
+            <c:forEach items="${requestScope.labels}" var="label">
+                if(value.labelId == "${label.labelId}"){
+                    isChecked = true;
+                }
+            </c:forEach>
+
+            if(isChecked) {
+                items = $("<div class=\"form-check form-check-inline\">\n" +
+                    " <input class=\"form-check-input\" type=\"checkbox\" name=\"labelId\" value=\""+value.labelId+"\" checked>\n" +
+                    " <label class=\"form-check-label\" for=\"inlineCheckbox1\">"+value.labelName+"</label>\n" +
+                    " </div>")
+            }else{
+                items = $("<div class=\"form-check form-check-inline\">\n" +
+                    " <input class=\"form-check-input\" type=\"checkbox\" name=\"labelId\" value=\""+value.labelId+"\">\n" +
+                    " <label class=\"form-check-label\" for=\"inlineCheckbox1\">"+value.labelName+"</label>\n" +
+                    " </div>")
+            }
+            label.append(items);
+        })
+    }
 
     $("#addCategoryBtn").click(addCategory);
 
@@ -224,7 +335,7 @@
     function getCategoryInfo() {
         $.ajax({
             type: "GET",
-            url: "blogcategory",
+            url: "category/get",
             dataType: "json",
             success: function (categoryList) {
                 updateCategory(categoryList);
@@ -236,11 +347,10 @@
     function updateCategory(categoryList) {
         var categoryOptions = $("#validationCategory");
         categoryOptions.empty();
-        alert
         $.each(categoryList,function (name,value) {
             var items;
             /*如果是修改，就选择原来的分类*/
-            if("${requestScope.blogAllInfo.category.categoryId}" == value.categoryId) {
+            if("${requestScope.category.categoryId}" == value.categoryId) {
                 items = $("<option value='"+value.categoryId +"' selected='selected'>"+value.categoryName+"</option>");
             }else{
                 items = $("<option value='"+value.categoryId +"'>"+value.categoryName+"</option>");

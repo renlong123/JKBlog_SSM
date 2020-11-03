@@ -36,7 +36,7 @@
                     <a class="nav-link" href="index">主页 <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="blogedit">发博客</a>
+                    <a class="nav-link" href="blog/jump">发博客</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -71,7 +71,7 @@
                             <a class="nav-link" href="homepage?userId=${sessionScope.userId}">${sessionScope.userName}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="loginOut">退出</a>
+                            <a class="nav-link" href="loginout">退出</a>
                         </li>
                     </c:if>
                 </ul>

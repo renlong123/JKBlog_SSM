@@ -28,6 +28,10 @@
         <property name="maxUploadSize" value="10240000"></property>
     </bean>
 
+    <mvc:resources mapping="/resources/**" location="/resources/"></mvc:resources>
+<!--    <mvc:resources mapping="/WEB-INF/static/css/**" location="/WEB-INF/static/css/"></mvc:resources>-->
+
+
     <!--    配置拦截器-->
     <!--
        /**的意思是所有文件夹及里面的子文件夹
@@ -45,7 +49,7 @@
         <!--没登录不允许访问-->
         <mvc:interceptor>
             <mvc:mapping path="/blogedit"/>
-            <mvc:mapping path="/loginOut"/>
+            <mvc:mapping path="/loginout"/>
             <mvc:mapping path="/blogdelete"/>
             <mvc:mapping path="/userinfo"/>
             <bean class="com.jkblog.interceptor.UnLoginedInterceptor"></bean>

@@ -72,7 +72,7 @@
                     </span>
                 </p>
                 <button type="button" class="btn btn-primary" onclick="window.location.href='userinfo'">修改信息</button>
-                <button type="button" class="btn btn-success" onclick="window.location.href='blogedit'">发博客</button>
+                <button type="button" class="btn btn-success" onclick="window.location.href='blog/jump'">发博客</button>
             </div>
             <%--最热文章--%>
             <p>
