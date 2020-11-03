@@ -31,14 +31,21 @@ public class BlogDaoImpl implements BlogDao {
         return null;
     }
 
+    /**
+     * 插入博客
+     * @param blog
+     * @return
+     */
     @Override
     public int insertBlog(Blog blog) {
-        return 0;
+        int insert = blogMapper.insertSelective(blog);
+        return insert;
     }
 
     @Override
     public int updateBlog(Blog blog) {
-        return 0;
+        int i = blogMapper.updateByPrimaryKeySelective(blog);
+        return i;
     }
 
     @Override

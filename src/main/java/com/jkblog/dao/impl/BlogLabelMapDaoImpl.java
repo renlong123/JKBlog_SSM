@@ -27,4 +27,39 @@ public class BlogLabelMapDaoImpl implements BlogLabelMapDao {
         List<BlogLabelMap> labelMaps = blogLabelMapMapper.selectBlogLabelMapWithLabel(blogId);
         return labelMaps;
     }
+
+    @Override
+    public int insertMaps(List<Integer> labelIds, Integer blogId) {
+        for(Integer labelId: labelIds){
+            BlogLabelMap map = new BlogLabelMap();
+            map.setBlogId(blogId);
+            map.setLabelId(labelId);
+            int insert = blogLabelMapMapper.insert(map);
+            if(insert <= 1){
+                return 0;
+            }
+        }
+
+        return labelIds.size();
+    }
+
+    @Override
+    public int updateMaps(List<Integer> labelIds, Integer blogId) {
+        int i = deleteMaps(blogId);
+        int i1 = insertMaps(labelIds, blogId);
+        return i+i1;
+    }
+
+    /**
+     * 删除
+     * @param blogId
+     * @return
+     */
+    @Override
+    public int deleteMaps(Integer blogId) {
+        BlogLabelMapExample example = new BlogLabelMapExample();
+        example.createCriteria().andBlogIdEqualTo(blogId);
+        int i = blogLabelMapMapper.deleteByExample(example);
+        return i;
+    }
 }

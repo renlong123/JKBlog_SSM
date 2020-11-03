@@ -31,4 +31,18 @@ public class BlogCategoryDaoImpl implements BlogCategoryDao {
         List<BlogCategory> blogCategories = blogCategoryMapper.selectByExample(new BlogCategoryExample());
         return blogCategories;
     }
+
+    @Override
+    public int updateCategoryCountById(Integer categoryId) {
+        int i = blogCategoryMapper.categoryCountIncrement(categoryId);
+        return i;
+    }
+
+    @Override
+    public int changeCategoryCountById(Integer categoryIdNew, Integer categoryIdOld) {
+
+        int i = blogCategoryMapper.categoryCountDecrement(categoryIdOld);
+        int i1 = blogCategoryMapper.categoryCountIncrement(categoryIdNew);
+        return i+i1;
+    }
 }

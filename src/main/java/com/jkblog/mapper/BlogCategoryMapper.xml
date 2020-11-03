@@ -189,6 +189,14 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+
+  <update id="categoryCountIncrement" parameterType="int">
+    update blogcategory set categoryCount=categoryCount+1 where categoryId=#{categoryId}
+  </update>
+  <update id="categoryCountDecrement" parameterType="int">
+    update blogcategory set categoryCount=categoryCount-1 where categoryId=#{categoryId} and categoryCount > 0
+  </update>
+
   <update id="updateByExampleSelective" parameterType="map">
     <!--
       WARNING - @mbg.generated

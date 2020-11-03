@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -16,37 +18,33 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
+    /**
+     * 根据是否有id进行插入或修改
+     * @param blog
+     * @param labelIds
+     * @param session
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/edit")
-    public String blogInsert(Blog blog){
-/*        response.setHeader("content-type", "text/html;charset=UTF-8");
-        String blogId = request.getParameter("blogId");
-        String blogTitle = request.getParameter("blogTitle");
-        Integer blogCategoryId = Integer.parseInt(request.getParameter("blogCategoryId"));
-        String blogContent = request.getParameter("blogContent");
+    @ResponseBody
+    public String blogInsert(Blog blog, List<Integer> labelIds, HttpSession session) throws Exception {
 
-        Blog blog = new Blog();
-        blog.setBlogTitle(blogTitle);
-        blog.setBlogCategoryId(blogCategoryId);
-        blog.setBlogContent(blogContent);
-        blog.setBlogUserId((int)request.getSession().getAttribute("userId"));
-        if(blogId == null){
-            int i = blogService.insertBlog(blog);
+        if(blog.getBlogId() != null){
+            int i = blogService.updateBlog(blog, labelIds);
             if(i>= 1){
-                response.getWriter().write("success");
+                return "success";
             }else{
-                response.getWriter().write("fail");
+                return "fail";
             }
         }else{
-            Integer blogSetId = Integer.parseInt(blogId);
-            blog.setBlogId(blogSetId);
-            int i = blogService.updateBlog(blog);
-            if(i>= 1){
-                response.getWriter().write("success");
+            int i = blogService.insertBlog(blog, labelIds, session);
+            if(i >= 1){
+                return "success";
             }else{
-                response.getWriter().write("fail");
+                return "fail";
             }
-        }*/
-        return null;
+        }
     }
 
     /**

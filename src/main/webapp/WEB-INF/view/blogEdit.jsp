@@ -208,9 +208,10 @@
     $("#addNewBlog").click(function () {
         var blogTitle = $("#addBlogForm input[name='blogTitle']").val();
         var blogCategoryId = $("#addBlogForm select[name='blogCategoryId']").val();
+        var labelIds = $("#addBlogForm input[name='labelIds'][checked='true']");/*input[name='labelIds'][checked='checked']"*/
         var contents =  editor.txt.html();
-
-        if(${requestScope.blog != null}){
+        alert(labelIds);
+/*        if(${requestScope.blog != null}){
             var blogId = "${requestScope.blog.blogId}";
             $.ajax({
                 type: "POST",
@@ -219,10 +220,10 @@
                     "blogId": blogId,
                     "blogTitle": blogTitle,
                     "blogCategoryId": blogCategoryId,
-                    "blogContent": contents
+                    "blogContent": contents,
+
                 },
                 success: function (result) {
-
                     if(result == "success"){
                         window.location.href = "homepage";
                     }else{
@@ -247,7 +248,7 @@
                     }
                 }
             });
-        }
+        }*/
     });
 
     /*分类模态框弹出*/
@@ -292,12 +293,12 @@
 
             if(isChecked) {
                 items = $("<div class=\"form-check form-check-inline\">\n" +
-                    " <input class=\"form-check-input\" type=\"checkbox\" name=\"labelId\" value=\""+value.labelId+"\" checked>\n" +
+                    " <input class=\"form-check-input\" type=\"checkbox\" name=\"labelIds\" value=\""+value.labelId+"\" checked>\n" +
                     " <label class=\"form-check-label\" for=\"inlineCheckbox1\">"+value.labelName+"</label>\n" +
                     " </div>")
             }else{
                 items = $("<div class=\"form-check form-check-inline\">\n" +
-                    " <input class=\"form-check-input\" type=\"checkbox\" name=\"labelId\" value=\""+value.labelId+"\">\n" +
+                    " <input class=\"form-check-input\" type=\"checkbox\" name=\"labelIds\" value=\""+value.labelId+"\">\n" +
                     " <label class=\"form-check-label\" for=\"inlineCheckbox1\">"+value.labelName+"</label>\n" +
                     " </div>")
             }
