@@ -143,6 +143,15 @@
   </dependencies>
 
   <build>
+    <!--maven打包时默认不会将srac/main.java下的xml打包，此步用于进行配置-->
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
+    </resources>
     <finalName>JKBlog_SSM</finalName>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>

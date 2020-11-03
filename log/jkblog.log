@@ -87,3 +87,28 @@ Caused by: org.springframework.beans.NotWritablePropertyException: Invalid prope
 [23:41:15.656] [INFO ] [IndexController.java index] hi,我来了
 [23:41:16.795] [INFO ] [IndexController.java index] logback测试!
 [23:41:16.796] [INFO ] [IndexController.java index] hi,我来了
+[11:12:12.812] [WARN ] [Logger.java warn] Property 'mapperLocations' was specified but matching resources are not found.
+[11:18:29.760] [WARN ] [Logger.java warn] Property 'mapperLocations' was specified but matching resources are not found.
+[11:39:57.547] [WARN ] [Logger.java warn] Property 'mapperLocations' was specified but matching resources are not found.
+[11:41:56.485] [WARN ] [Logger.java warn] Property 'mapperLocations' was specified but matching resources are not found.
+[11:49:02.517] [WARN ] [Logger.java warn] Property 'mapperLocations' was specified but matching resources are not found.
+[11:57:45.942] [WARN ] [Logger.java warn] Property 'mapperLocations' was specified but matching resources are not found.
+[12:04:42.956] [WARN ] [Logger.java warn] Property 'mapperLocations' was specified but matching resources are not found.
+[12:08:28.498] [WARN ] [Logger.java warn] Property 'mapperLocations' was specified but matching resources are not found.
+[12:12:16.969] [INFO ] [DruidDataSource.java init] {dataSource-1} inited
+[12:18:08.872] [ERROR] [DruidAbstractDataSource.java testConnectionInternal] discard long time none received connection. , jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, lastPacketReceivedIdleMillis : 343652
+[12:18:08.875] [ERROR] [DruidAbstractDataSource.java testConnectionInternal] discard long time none received connection. , jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, lastPacketReceivedIdleMillis : 348956
+[12:42:36.893] [ERROR] [DruidAbstractDataSource.java testConnectionInternal] discard long time none received connection. , jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, lastPacketReceivedIdleMillis : 1467977
+[12:44:02.714] [ERROR] [DruidAbstractDataSource.java testConnectionInternal] discard long time none received connection. , jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, lastPacketReceivedIdleMillis : 85805
+[12:49:04.268] [ERROR] [DruidAbstractDataSource.java testConnectionInternal] discard long time none received connection. , jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, lastPacketReceivedIdleMillis : 301543
+[12:50:13.514] [ERROR] [DruidAbstractDataSource.java testConnectionInternal] discard long time none received connection. , jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, lastPacketReceivedIdleMillis : 69224
+[12:51:18.046] [ERROR] [DruidAbstractDataSource.java testConnectionInternal] discard long time none received connection. , jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, lastPacketReceivedIdleMillis : 64515
+[12:54:34.760] [ERROR] [DruidAbstractDataSource.java testConnectionInternal] discard long time none received connection. , jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, lastPacketReceivedIdleMillis : 196695
+[15:34:18.301] [INFO ] [DruidDataSource.java init] {dataSource-1} inited
+[15:39:05.095] [ERROR] [DruidAbstractDataSource.java testConnectionInternal] discard long time none received connection. , jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, lastPacketReceivedIdleMillis : 236908
+[15:40:35.179] [ERROR] [DruidAbstractDataSource.java testConnectionInternal] discard long time none received connection. , jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, lastPacketReceivedIdleMillis : 90063
+[15:43:41.220] [INFO ] [DruidDataSource.java init] {dataSource-1} inited
+[15:44:52.825] [WARN ] [AbstractHandlerExceptionResolver.java logException] Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required String parameter 'userName' is not present]
+[15:50:02.060] [INFO ] [DruidDataSource.java init] {dataSource-1} inited
+[15:52:05.781] [INFO ] [DruidDataSource.java init] {dataSource-1} inited
+[15:54:34.442] [ERROR] [DruidAbstractDataSource.java testConnectionInternal] discard long time none received connection. , jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, jdbcUrl : jdbc:mysql://localhost:3306/jkblogssm?useSSL=false&serverTimezone=Asia/Shanghai, lastPacketReceivedIdleMillis : 144970

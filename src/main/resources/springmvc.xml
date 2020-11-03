@@ -29,9 +29,34 @@
     </bean>
 
     <!--    配置拦截器-->
-<!--    <mvc:interceptors>
+    <!--
+       /**的意思是所有文件夹及里面的子文件夹
+       /*是所有文件夹，不含子文件夹
+       /是web项目的根目录
+     -->
 
-    </mvc:interceptors>-->
+    <mvc:interceptors>
+        <!--检测是否登录，没有登录查找cookie，如果有就设置-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/resources/**"/>
+            <bean class="com.jkblog.interceptor.CookieInterceptor"></bean>
+        </mvc:interceptor>
+        <!--没登录不允许访问-->
+        <mvc:interceptor>
+            <mvc:mapping path="/blogedit"/>
+            <mvc:mapping path="/loginOut"/>
+            <mvc:mapping path="/blogdelete"/>
+            <mvc:mapping path="/userinfo"/>
+            <bean class="com.jkblog.interceptor.UnLoginedInterceptor"></bean>
+        </mvc:interceptor>
+        <!--登陆了不允许访问-->
+        <mvc:interceptor>
+            <mvc:mapping path="/register"/>
+            <mvc:mapping path="/login"/>
+            <bean class="com.jkblog.interceptor.LoginedInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
     <!--    配置异常解析器-->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <!--    为所有异常定义默认的处理页面,exceptionMappings未定义的，

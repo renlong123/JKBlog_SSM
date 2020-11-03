@@ -130,6 +130,15 @@
       order by ${orderByClause}
     </if>
   </select>
+  <!--查询阅读排行靠前的博客-->
+  <select id="selectHotBlogs" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from blog
+    order by blogReadTimes desc
+    limit 0,#{numb}
+  </select>
+
   <select id="selectByExample" parameterType="com.jkblog.bean.BlogExample" resultMap="BaseResultMap">
     <!--
       WARNING - @mbg.generated

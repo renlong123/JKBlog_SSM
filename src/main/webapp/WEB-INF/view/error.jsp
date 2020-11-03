@@ -12,7 +12,6 @@
 <%
     String contextPath = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+contextPath+"/";
-
 %>
 <html>
 <head>
@@ -32,7 +31,8 @@
     <div style="text-align: center">
         <h1>出错啦！</h1>
         <hr/>
-        <p>${requestScope.errorTips}</p>
+        <p>服务器内部出现异常，请稍后再试或与管理员联系</p>
+        <p style="width: 70%;margin: auto"> ${requestScope.exception}</p>
 
         <button class="btn btn-success" onclick="toHome()">回到首页</button>
     </div>
