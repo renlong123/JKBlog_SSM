@@ -13,7 +13,7 @@
     <context:component-scan base-package="com.jkblog.controller"></context:component-scan>
 
     <!--定义静态资源的处理-->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven validator="validator"/>
     <mvc:default-servlet-handler/>
 
     <!--    视图解析器-->
@@ -57,17 +57,33 @@
             <bean class="com.jkblog.interceptor.LoginedInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
+
+    <!--数据校验-->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"></property>
+        <property name="validationMessageSource" ref="validationMessageSource"></property>
+    </bean>
+    <bean id="validationMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>classpath:validate</value>
+            </list>
+        </property>
+        <property name="fileEncodings" value="utf-8" />
+        <property name="cacheSeconds" value="120" />
+    </bean>
+
     <!--    配置异常解析器-->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <!--    为所有异常定义默认的处理页面,exceptionMappings未定义的，
                 value表示跳转页面，至于文件路径和后缀已经在 viewResolver 中指定-->
-        <property name="defaultErrorView" value="error"></property>
+        <property name="defaultErrorView" value="error/defaultError"></property>
         <!--    定义异常处理页面用来获取异常信息的变量名，被存放到 request 域中-->
         <property name="exceptionAttribute" value="exception"></property>
         <!--    需要特殊处理的异常，全类名作为key，异常页文件名作为值，可将不同的异常映射到不同的页面上-->
-<!--        <property name="exceptionMappings">
+        <!--<property name="exceptionMappings">
             <props>
-                <prop key="java.lang.NullPointerException">nullPointer</prop>
+                <prop key="com.jkblog.exception.UserInfoNotCorrectException">nullPointer</prop>
             </props>
         </property>-->
     </bean>

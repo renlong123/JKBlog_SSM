@@ -108,6 +108,13 @@
       <version>1.4</version>
     </dependency>
 
+    <!--数据校验功能-->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>5.3.4.Final</version>
+    </dependency>
+
     <!--********json转换*************-->
     <dependency>
       <groupId>com.google.code.gson</groupId>

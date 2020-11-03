@@ -1,5 +1,10 @@
 package com.jkblog.bean;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class BlogUser {
@@ -19,6 +24,8 @@ public class BlogUser {
      *
      * @mbg.generated Mon Nov 02 23:27:58 CST 2020
      */
+    @Length(min = 2,max = 50,message = "{user.userName.not.length}")
+    @Pattern( regexp = "[A-Za-z0-9\u4e00-\u9fa5]{2,50}",message = "{user.userName.not.pattern}")
     private String userName;
 
     /**
@@ -28,6 +35,7 @@ public class BlogUser {
      *
      * @mbg.generated Mon Nov 02 23:27:58 CST 2020
      */
+    @Pattern( regexp = "[A-Za-z0-9\u4e00-\u9fa5]{6,50}",message = "{user.userPassword.not.length}")
     private String userPassword;
 
     /**
@@ -82,6 +90,7 @@ public class BlogUser {
      *
      * @mbg.generated Mon Nov 02 23:27:58 CST 2020
      */
+    @Email(message = "{user.useEmail.not.pattern}")
     private String userEmail;
 
     /**

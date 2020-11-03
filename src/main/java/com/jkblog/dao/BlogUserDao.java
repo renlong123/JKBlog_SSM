@@ -10,4 +10,6 @@ public interface BlogUserDao {
     public BlogUser getBlogUserByUserName(String userName);
 
     public BlogUser getBlogUserByUserId(Integer userId);
+
+    public int insertUser(BlogUser blogUser);
 }

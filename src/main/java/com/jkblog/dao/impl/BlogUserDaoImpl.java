@@ -15,6 +15,11 @@ public class BlogUserDaoImpl implements BlogUserDao {
     @Autowired
     private BlogUserMapper userMapper;
 
+    /**
+     * 通过用户名获取用户信息
+     * @param userName
+     * @return
+     */
     @Override
     public BlogUser getBlogUserByUserName(String userName) {
         BlogUserExample example = new BlogUserExample();
@@ -27,9 +32,25 @@ public class BlogUserDaoImpl implements BlogUserDao {
         }
     }
 
+    /**
+     * 通过用户id获取用户信息
+     * @param userId
+     * @return
+     */
     @Override
     public BlogUser getBlogUserByUserId(Integer userId) {
         BlogUser blogUser = userMapper.selectByPrimaryKey(userId);
         return blogUser;
+    }
+
+    /**
+     * 插入一个用户,某项信息没有就先不插入
+     * @param blogUser
+     * @return
+     */
+    @Override
+    public int insertUser(BlogUser blogUser) {
+        int i = userMapper.insertSelective(blogUser);
+        return i;
     }
 }

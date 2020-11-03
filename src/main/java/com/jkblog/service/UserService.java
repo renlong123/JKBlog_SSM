@@ -1,5 +1,6 @@
 package com.jkblog.service;
 
+import com.jkblog.bean.Blog;
 import com.jkblog.bean.BlogUser;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -13,4 +14,8 @@ public interface UserService {
                             HttpServletRequest request, HttpServletResponse response);
 
     public String getUserNameByUserId(Integer userId);
+
+    public int insertUser(BlogUser blogUser);
+
+    public String checkUserIsOccupied(String userName);
 }

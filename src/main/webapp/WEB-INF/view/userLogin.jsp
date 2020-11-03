@@ -48,9 +48,9 @@
 
     <div style="height: 50px">
     </div>
-    <div class="container-fluid" style="width: 60%">
-    <div class="card" style="max-width: 600px;margin: auto;">
-        <div class="card-body" style="width: 80%;margin: auto">
+    <div class="container-fluid" style="width: 70%">
+    <div class="card" style="max-width: 700px;margin: auto;">
+        <div class="card-body" style="width: 90%;margin: auto">
             <h5 class="card-title incenter">请登录</h5>
             <p class="card-text">
                 <form method="POST" action="login" >

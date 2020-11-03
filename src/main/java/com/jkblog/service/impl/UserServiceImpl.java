@@ -80,4 +80,30 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * 根据输入的user进行插入到数据库
+     * @param blogUser
+     * @return
+     */
+    @Override
+    public int insertUser(BlogUser blogUser) {
+        int i = userDao.insertUser(blogUser);
+        return i;
+    }
+
+    /**
+     * 根据输入用户名检测用户是否已经有了
+     * @param userName
+     * @return
+     */
+    @Override
+    public String checkUserIsOccupied(String userName) {
+        BlogUser blogUserInDataBase = userDao.getBlogUserByUserName(userName);
+        if(blogUserInDataBase != null && blogUserInDataBase.getUserId()!= null && blogUserInDataBase.getUserName() != null){
+            return "true";
+        }else {
+            return "false";
+        }
+    }
+
 }

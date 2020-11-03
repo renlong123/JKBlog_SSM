@@ -43,6 +43,6 @@
         }
     </script>
     <div style="height: 500px"></div>
-    <%@include file="footer.jsp" %>
+    <%@include file="../footer.jsp" %>
 </body>
 </html>

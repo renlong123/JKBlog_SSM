@@ -46,9 +46,9 @@
 
 <%@include file="header.jsp" %>
 <div style="height: 30px"></div>
-<div class="container-fluid" style="width: 60%">
-    <div class="card" style="max-width: 600px;margin: auto">
-        <div class="card-body"  style="margin: auto;width: 80%">
+<div class="container-fluid" style="width: 70%">
+    <div class="card" style="max-width: 700px;margin: auto">
+        <div class="card-body"  style="margin: auto;width: 90%">
             <h3 class="card-title" style="text-align: center">欢迎注册</h3>
             <p class="card-text">
                 <form action="register" method="POST" >
@@ -108,6 +108,21 @@
                             </div>
                         </div>
                     </fieldset>
+                    <div class="form-group row" style="color: red">
+                        <label for="inputemail" class="col-sm-2 col-form-label">
+                            <c:if test="${errors != null && errors.size() > 0}">
+                                出错拉：
+                            </c:if>
+                        </label>
+                        <div class="col-sm-10">
+                            <c:if test="${errors != null && errors.size() > 0}">
+                                <c:forEach items="${errors}" var="error">
+                                    <div> ${error.defaultMessage}</div>
+                                </c:forEach>
+                            </c:if>
+                        </div>
+                    </div>
+
                     <p class="incenter">
                         <button class="btn btn-success" type="submit">注册</button>&nbsp;&nbsp;&nbsp;&nbsp;
                         <button class="btn btn-success" type="button">登录</button>
@@ -137,7 +152,7 @@
                 type: "GET",
                 url: "namevalidate?userName="+obj.val(),
                 success: function (result) {
-                    if(result == "yes"){
+                    if(result == "false"){
                         obj.siblings(".invalid-feedback").text("用户名应为2-50位字母或数字或中文！");
                         obj.removeClass("is-invalid");
                         obj.parent().addClass("was-validated");
