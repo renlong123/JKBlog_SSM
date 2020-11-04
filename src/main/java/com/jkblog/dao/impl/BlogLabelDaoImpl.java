@@ -35,4 +35,16 @@ public class BlogLabelDaoImpl implements BlogLabelDao {
         return blogLabels;
 
     }
+
+    @Override
+    public int insertBlogLabel(BlogLabel blogLabel) {
+        int i = blogLabelMapper.insertSelective(blogLabel);
+        return i;
+    }
+
+    @Override
+    public int updateBlogLabel(BlogLabel blogLabel) {
+        int i = blogLabelMapper.updateByPrimaryKeySelective(blogLabel);
+        return i;
+    }
 }

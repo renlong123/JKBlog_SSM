@@ -27,4 +27,26 @@ public class CategoryServiceImpl implements CategoryService {
         log.debug(categories.toString());
         return new Gson().toJson(categories);
     }
+
+    /**
+     * 更新分类，没有的项不更新
+     * @param blogCategory
+     * @return
+     */
+    @Override
+    public int updateCategory(BlogCategory blogCategory) {
+        int i = blogCategoryDao.updateCategory(blogCategory);
+        return i;
+    }
+
+    /**
+     * 插入分类
+     * @param blogCategory
+     * @return
+     */
+    @Override
+    public int insertCategory(BlogCategory blogCategory) {
+        int i = blogCategoryDao.insertCategory(blogCategory);
+        return i;
+    }
 }

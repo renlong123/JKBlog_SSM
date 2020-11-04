@@ -13,4 +13,8 @@ public interface BlogCategoryDao {
     public int updateCategoryCountById(Integer categoryId);
 
     public int changeCategoryCountById(Integer categoryIdNew,Integer categoryIdOld);
+
+    public int insertCategory(BlogCategory blogCategory);
+
+    public int updateCategory(BlogCategory blogCategory);
 }

@@ -30,7 +30,7 @@
   <select id="selectBlogLabelMapWithLabel" parameterType="java.lang.Integer" resultMap="ResultMapWithLabel">
     select m.blogLabelId blogLabelId,m.blogId blogId,m.labelId labelId,l.labelName labelName,l.labelDescription labelDescription
     from blogLabelMap m left join blogLabel l
-    on m.blogId=#{blogId} and m.labelId=l.labelId
+    on  m.labelId=l.labelId where m.blogId=#{blogId}
   </select>
 
   <sql id="Example_Where_Clause">

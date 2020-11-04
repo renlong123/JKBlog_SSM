@@ -172,13 +172,13 @@
                     <div class="form-group row">
                         <label for="inputLabel" class="col-sm-2 col-form-label">标签名</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputLabel" name="categoryName">
+                            <input type="text" class="form-control" id="inputLabel" name="inputLabel">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputLabelDescription" class="col-sm-2 col-form-label">标签描述</label>
                         <div class="col-sm-10">
-                            <textarea  class="form-control" id="inputLabelDescription" rows="3" name="categoryDescription"></textarea>
+                            <textarea  class="form-control" id="inputLabelDescription" rows="3" name="inputLabelDescription"></textarea>
                         </div>
                     </div>
                 </form>
@@ -208,20 +208,25 @@
     $("#addNewBlog").click(function () {
         var blogTitle = $("#addBlogForm input[name='blogTitle']").val();
         var blogCategoryId = $("#addBlogForm select[name='blogCategoryId']").val();
-        var labelIds = $("#addBlogForm input[name='labelIds'][checked='true']");/*input[name='labelIds'][checked='checked']"*/
+        var labelIds = $("#addBlogForm input[name='labelIds']:checked");/*input[name='labelIds'][checked='checked']"*/
+        var array = [];
+        labelIds.each(function () {
+            array.push($(this).val());
+        })
         var contents =  editor.txt.html();
-        alert(labelIds);
-/*        if(${requestScope.blog != null}){
+        /*alert(array);*/
+        if(${requestScope.blog != null}){
             var blogId = "${requestScope.blog.blogId}";
             $.ajax({
                 type: "POST",
                 url: "blog/edit",
+                traditional :true,	//必须加上该句话来序列化
                 data: {
                     "blogId": blogId,
                     "blogTitle": blogTitle,
                     "blogCategoryId": blogCategoryId,
                     "blogContent": contents,
-
+                    'labelIds':array
                 },
                 success: function (result) {
                     if(result == "success"){
@@ -234,13 +239,17 @@
         }else{
             $.ajax({
                 type: "POST",
-                url: "blogedit",
+                url: "blog/edit",
+                traditional :true,	//必须加上该句话来序列化
                 data: {
                     "blogTitle": blogTitle,
                     "blogCategoryId": blogCategoryId,
-                    "blogContent": contents
+                    "blogContent": contents,
+                    'labelIds':array
                 },
+               /* contentType: 'application/json;charset=utf-8',*/
                 success: function (result) {
+                    alert(result);
                     if(result == "success"){
                         window.location.href = "homepage";
                     }else{
@@ -248,12 +257,16 @@
                     }
                 }
             });
-        }*/
+        }
     });
 
     /*分类模态框弹出*/
     $("#categoryAddButton").click(function () {
         $('#categoryAddModal').modal('show');
+    });
+    /*标签*/
+    $("#labelAddButton").click(function () {
+        $('#labelAddModal').modal('show');
     });
 
     /*页面加载完成后加载分类*/
@@ -282,7 +295,7 @@
         label.empty();
         $.each(labelList,function (name,value) {
             var items;
-            /*如果是修改，就选择原来的分类*/
+            /*如果是修改，就选择原来的*/
             var isChecked = false;
 
             <c:forEach items="${requestScope.labels}" var="label">
@@ -307,15 +320,38 @@
     }
 
     $("#addCategoryBtn").click(addCategory);
+    $("#addLabelBtn").click(addLabel);
+
+    /*发ajax请求新增标签*/
+    function addLabel() {
+        var labelName = $("#addLabel input[name='inputLabel']").val();
+        var labelDescription = $("#addLabel textarea[name='inputLabelDescription']").val();
+        $.ajax({
+            type: "POST",
+            url: "label/insert",
+            data: "labelName="+labelName+"&labelDescription="+labelDescription,
+            success: function (result) {
+                if(result == "success"){
+                    $('#labelAddModal').modal('hide');
+                    getLabelInfo();
+                }else{
+                    alert("添加出错了！");
+                }
+            },
+            error: function () {
+                alert("添加出错了！");
+            }
+        });
+    }
 
     /*发ajax请求新增分类*/
     function addCategory() {
-        alert(1);
+        //alert(1);
         var categoryName = $("#addCategory input[name='categoryName']").val();
         var categoryDescription = $("#addCategory textarea[name='categoryDescription']").val();
         $.ajax({
             type: "POST",
-            url: "blogcategory",
+            url: "category/insert",
             data: "categoryName="+categoryName+"&categoryDescription="+categoryDescription,
             success: function (result) {
                 if(result == "success"){

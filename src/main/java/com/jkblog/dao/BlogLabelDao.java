@@ -10,4 +10,8 @@ public interface BlogLabelDao {
 
     public List<BlogLabel> getBlogLabels();
 
+    public int insertBlogLabel(BlogLabel blogLabel);
+
+    public int updateBlogLabel(BlogLabel blogLabel);
+
 }

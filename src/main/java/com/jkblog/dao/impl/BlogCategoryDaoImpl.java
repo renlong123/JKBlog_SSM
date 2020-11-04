@@ -45,4 +45,16 @@ public class BlogCategoryDaoImpl implements BlogCategoryDao {
         int i1 = blogCategoryMapper.categoryCountIncrement(categoryIdNew);
         return i+i1;
     }
+
+    @Override
+    public int insertCategory(BlogCategory blogCategory) {
+        int i = blogCategoryMapper.insertSelective(blogCategory);
+        return i;
+    }
+
+    @Override
+    public int updateCategory(BlogCategory blogCategory) {
+        int i = blogCategoryMapper.updateByPrimaryKeySelective(blogCategory);
+        return i;
+    }
 }

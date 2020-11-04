@@ -35,7 +35,7 @@ public class BlogLabelMapDaoImpl implements BlogLabelMapDao {
             map.setBlogId(blogId);
             map.setLabelId(labelId);
             int insert = blogLabelMapMapper.insert(map);
-            if(insert <= 1){
+            if(insert < 1){
                 return 0;
             }
         }

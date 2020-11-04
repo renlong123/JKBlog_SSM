@@ -21,4 +21,16 @@ public class BlogLabelServiceImpl implements BlogLabelService {
         List<BlogLabel> blogLabels = blogLabelDao.getBlogLabels();
         return blogLabels;
     }
+
+    @Override
+    public int insertBlogLabel(BlogLabel blogLabel) {
+        int i = blogLabelDao.insertBlogLabel(blogLabel);
+        return i;
+    }
+
+    @Override
+    public int updateBlogLabel(BlogLabel blogLabel) {
+        int i = blogLabelDao.updateBlogLabel(blogLabel);
+        return i;
+    }
 }

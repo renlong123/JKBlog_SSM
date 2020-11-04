@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,5 +29,20 @@ public class BlogLabelController {
     public String getBlogLabels(){
         List<BlogLabel> blogLabels = blogLabelService.getBlogLabels();
         return new Gson().toJson(blogLabels);
+    }
+
+    /**
+     * 插入ajax请求的数据
+     * */
+    @ResponseBody
+    @PostMapping("/insert")
+    public String insertBlogLabels(BlogLabel blogLabel){
+
+        int i = blogLabelService.insertBlogLabel(blogLabel);
+        if(i>=1 ){
+            return "success";
+        }else{
+            return "fail";
+        }
     }
 }
