@@ -53,7 +53,7 @@
         <div class="card-body" style="width: 90%;margin: auto">
             <h5 class="card-title incenter">请登录</h5>
             <p class="card-text">
-                <form method="POST" action="login" >
+                <form method="POST" action="user/login" >
                     <div class="form-group row">
                         <label for="inputusername" class="col-sm-2 col-form-label">用户名</label>
                         <div class="col-sm-10">

@@ -57,4 +57,10 @@ public class BlogCategoryDaoImpl implements BlogCategoryDao {
         int i = blogCategoryMapper.updateByPrimaryKeySelective(blogCategory);
         return i;
     }
+
+    @Override
+    public int decrementCategoryById(Integer categoryId) {
+        int i = blogCategoryMapper.decrementCategoryById(categoryId);
+        return i;
+    }
 }

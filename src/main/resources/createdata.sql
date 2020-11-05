@@ -64,3 +64,24 @@ create table followfanmap(
     fanUserId int not null,
     primary key(followFanId)
 );
+
+#用户头像
+CREATE TABLE bloguserhead(
+
+	userId INT NOT NULL,
+	userHeaderPic MEDIUMBLOB,
+	PRIMARY KEY(userId)
+)
+
+create table blogimages(
+    blogId int not null,
+    blogimages varchar not null,
+    primary key(blogId)
+)
+
+create table allImages(
+    imageId int auto_increment,
+    imageUrl varchar(255) not null,
+    expiredTime TIMESTAMP,
+    primary key(imageId)
+)

@@ -54,7 +54,7 @@
     <p style="text-align: center">
         <h2 style="margin: auto">所有文章</h2>
     </p>
-    <c:forEach items="${requestScope.blogs}" var="blog">
+    <c:forEach items="${requestScope.pageInfo.list}" var="blog">
         <div style="height: 10px"></div>
         <div class="card">
             <div class="card-body">
@@ -70,8 +70,8 @@
                     <span class="badge badge-primary">阅读数：${blog.blogReadTimes}</span>
                     <span class="badge badge-success">评论数：${blog.blogCommentTimes}</span>
                 </p>
-                <button class="btn btn-danger btn-sm" onclick="window.location.href='blogdetail?blogId=${blog.blogId}'">查看</button>
-                <button class="btn btn-danger btn-sm" onclick="window.location.href='blogedit?blogId=${blog.blogId}'">编辑</button>
+                <button class="btn btn-danger btn-sm" onclick="window.location.href='blog/detail/${blog.blogId}'">查看</button>
+                <button class="btn btn-danger btn-sm" onclick="window.location.href='blog/edit/${blog.blogId}'">编辑</button>
                 <button class="btn btn-danger btn-sm" id="blogDeleteButton" onclick="deleteBlog('${blog.blogTitle}','${blog.blogId}')">删除</button>
             </div>
         </div>
@@ -81,55 +81,55 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
             <li class="page-item">
-                <a class="page-link" href="blogs/page">首页</a>
+                <a class="page-link" href="user/blogs/${requestScope.pageUserId}">首页</a>
             </li>
 
-            <c:if test="${requestScope.page > 1}">
+            <c:if test="${requestScope.pageInfo.pageNum > 1}">
                 <li class="page-item">
-                    <a class="page-link" href="blogs/page?page=${requestScope.page - 1}" tabindex="-1">上一页</a>
+                    <a class="page-link" href="user/blogs/${requestScope.pageUserId}?page=${requestScope.pageInfo.pageNum - 1}" tabindex="-1">上一页</a>
                 </li>
             </c:if>
-            <c:if test="${requestScope.page <= 1}">
+            <c:if test="${requestScope.pageInfo.pageNum <= 1}">
                 <li class="page-item disabled">
                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一页</a>
                 </li>
             </c:if>
 
-            <c:if test="${requestScope.pages < 5}">
-                <c:forEach begin="1" end="${requestScope.pages}" var="number">
-                    <c:if test="${requestScope.page == number}">
+            <c:if test="${requestScope.pageInfo.pages < 5}">
+                <c:forEach begin="1" end="${requestScope.pageInfo.pages}" var="number">
+                    <c:if test="${requestScope.pageInfo.pageNum == number}">
                         <li class="page-item active disabled"><a class="page-link" href="#" aria-disabled="true">${number}</a></li>
                     </c:if>
-                    <c:if test="${requestScope.page != number}">
-                        <li class="page-item"><a class="page-link" href="blogs/page?page=${number}">${number}</a></li>
+                    <c:if test="${requestScope.pageInfo.pageNum != number}">
+                        <li class="page-item"><a class="page-link" href="user/blogs/${requestScope.pageUserId}?page=${number}">${number}</a></li>
                     </c:if>
                 </c:forEach>
             </c:if>
 
-            <c:if test="${requestScope.pages >= 5}">
-                <c:forEach begin="${requestScope.page-2}" end="${requestScope.page+2}" var="number">
-                    <c:if test="${requestScope.page == number}">
+            <c:if test="${requestScope.pageInfo.pages >= 5}">
+                <c:forEach begin="${requestScope.pageInfo.pageNum-2}" end="${requestScope.pageInfo.pageNum+2}" var="number">
+                    <c:if test="${requestScope.pageInfo.pageNum == number}">
                         <li class="page-item disabled"><a class="page-link" href="#" aria-disabled="true">${number}</a></li>
                     </c:if>
-                    <c:if test="${requestScope.page != number}">
-                        <li class="page-item"><a class="page-link" href="blogs/page?page=${number}">${number}</a></li>
+                    <c:if test="${requestScope.pageInfo.pageNum != number}">
+                        <li class="page-item"><a class="page-link" href="user/blogs/${requestScope.pageUserId}?page=${number}">${number}</a></li>
                     </c:if>
                 </c:forEach>
             </c:if>
 
-            <c:if test="${requestScope.pages > requestScope.page}">
+            <c:if test="${requestScope.pageInfo.pages > requestScope.pageInfo.pageNum}">
             <li class="page-item">
-                <a class="page-link" href="blogs/page?page=${requestScope.page + 1}">下一页</a>
+                <a class="page-link" href="user/blogs/${requestScope.pageUserId}?page=${requestScope.pageInfo.pageNum + 1}">下一页</a>
             </li>
             </c:if>
-            <c:if test="${requestScope.pages <= requestScope.page}">
+            <c:if test="${requestScope.pageInfo.pages <= requestScope.pageInfo.pageNum}">
             <li class="page-item disabled">
                 <a class="page-link" href="#" aria-disabled="true">下一页</a>
             </li>
             </c:if>
 
             <li class="page-item">
-                <a class="page-link" href="blogs/page?page=${requestScope.pages}">末页</a>
+                <a class="page-link" href="user/blogs/${requestScope.pageUserId}?page=${requestScope.pageInfo.pages}">末页</a>
             </li>
         </ul>
     </nav>
@@ -161,14 +161,14 @@
 
 <script>
     function contentDetail(blogId) {
-        window.location.href = "blogdetail?blogId="+blogId;
+        window.location.href = "blog/detail/"+blogId;
     }
 
     function deleteBlog(blogTitle,blogId){
         $('#titleDescription').html(blogTitle);
         $('#blogDeleteModal').modal('show');
         $("#deleteConfirm").click(function () {
-            window.location.href = "blogdelete?blogId="+blogId;
+            window.location.href = "blog/delete/"+blogId;
         });
     }
 

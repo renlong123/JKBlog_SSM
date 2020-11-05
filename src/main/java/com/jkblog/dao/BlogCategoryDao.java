@@ -17,4 +17,6 @@ public interface BlogCategoryDao {
     public int insertCategory(BlogCategory blogCategory);
 
     public int updateCategory(BlogCategory blogCategory);
+
+    int decrementCategoryById(Integer categoryId);
 }

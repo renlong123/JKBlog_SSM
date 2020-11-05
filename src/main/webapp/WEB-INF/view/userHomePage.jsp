@@ -58,30 +58,37 @@
         <div class="col-10">
             <div class="jumbotron">
                 <div class="text-center" style="text-align: left">
-                    <img src="headerpic?userId=${requestScope.user.userId}" class="rounded card-img-top" alt="头像不见了"
+                    <img src="user/header/${requestScope.user.userId}" class="rounded card-img-top" alt="头像不见了"
                          style="width: 80px;height: 80px" onclick="changeHeader()">
                 </div>
                 <h3>${requestScope.user.userName}</h3>
                 <p class="lead">${requestScope.user.userDescription}</p>
                 <p>
                     <span class="badge badge-secondary">UID: ${requestScope.user.userId}</span>
-                    <span class="badge badge-secondary">${requestScope.user.userGender}</span>
+                    <span class="badge badge-secondary">
+                        <c:if test="${requestScope.user.userGender == '1'}">
+                            男
+                        </c:if>
+                        <c:if test="${requestScope.user.userGender == '2'}">
+                            女
+                        </c:if>
+                    </span>
                     <span class="badge badge-secondary">
                         加入时间：
                         <fmt:formatDate value="${requestScope.user.userCreateTime}" pattern="yyy-MM-dd"></fmt:formatDate>
                     </span>
                 </p>
-                <button type="button" class="btn btn-primary" onclick="window.location.href='userinfo'">修改信息</button>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='user/info'">修改信息</button>
                 <button type="button" class="btn btn-success" onclick="window.location.href='blog/jump'">发博客</button>
             </div>
             <%--最热文章--%>
             <p>
                 热门文章
-                <button class="btn btn-success btn-sm" onclick="window.location.href='blogs/page'" style="float: right">
+                <button class="btn btn-success btn-sm" onclick="window.location.href='user/blogs/${requestScope.user.userId}'" style="float: right">
                     查看全部
                 </button>
             </p>
-            <c:forEach items="${requestScope.blogs}" var="blog">
+            <c:forEach items="${requestScope.blogs.list}" var="blog">
                 <div style="height: 10px"></div>
                 <div class="card">
                     <div class="card-body">
@@ -97,8 +104,8 @@
                             <span class="badge badge-primary">阅读数：${blog.blogReadTimes}</span>
                             <span class="badge badge-success">评论数：${blog.blogCommentTimes}</span>
                         </p>
-                        <button class="btn btn-danger btn-sm" onclick="window.location.href='blogdetail?blogId=${blog.blogId}'">查看</button>
-                        <button class="btn btn-danger btn-sm" onclick="window.location.href='blogedit?blogId=${blog.blogId}'">编辑</button>
+                        <button class="btn btn-success btn-sm" onclick="window.location.href='blog/detail/${blog.blogId}'">查看</button>
+                        <button class="btn btn-primary btn-sm" onclick="window.location.href='blog/jump?blogId=${blog.blogId}'">编辑</button>
                         <button class="btn btn-danger btn-sm" id="blogDeleteButton" onclick="deleteBlog('${blog.blogTitle}','${blog.blogId}')">删除</button>
                     </div>
                 </div>
@@ -150,7 +157,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="originalImage">原头像</label>
-                    <img src="headerpic?userId=${requestScope.user.userId}" style="width: 50px;height: 50px" id="originalImage">
+                    <img src="user/header/${requestScope.user.userId}" style="width: 50px;height: 50px" id="originalImage">
                 </div>
                 <hr/>
                 <div class="form-group">
@@ -159,30 +166,30 @@
                     <p class="help-block">支持jpg、jpeg、png、gif格式，大小不超过10.0M</p>
                 </div>
             </div>
-            <div class="modal-footer">
+            <%--<div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                 <button type="button" class="btn btn-primary" id="changeConfirm">确定修改</button>
-            </div>
+            </div>--%>
         </div>
     </div>
 </div>
 <%@include file="footer.jsp" %>
 <script>
     function contentDetail(blogId) {
-        window.location.href = "blogdetail?blogId="+blogId;
+        window.location.href = "blog/detail/"+blogId;
     }
 
     function deleteBlog(blogTitle,blogId){
         $('#titleDescription').html(blogTitle);
         $('#blogDeleteModal').modal('show');
         $("#deleteConfirm").click(function () {
-            window.location.href = "blogdelete?blogId="+blogId;
+            window.location.href = "blog/delete/"+blogId;
         });
     }
 
     $("#exampleFormControlFile").fileinput({
         language: 'zh',
-        uploadUrl: "headerpic", //上传的地址
+        uploadUrl: "user/header", //上传的地址
         allowedFileExtensions : ['jpg', 'png','gif','jpeg'],//接收的文件后缀
         showUpload: true, //是否显示上传按钮
         showCaption: true,//是否显示标题
@@ -191,10 +198,18 @@
         maxImageWidth: 1000,//图片的最大宽度
         maxImageHeight: 1000,//图片的最大高度
         maxFileSize: 10240,//单位为kb，如果为0表示不限制文件大小
+        maxFileCount: 1
     });
 
     $("#exampleFormControlFile").on("fileuploaded", function (event, data, previewId, index) {
-        alert(11);
+        if(data.response == "success"){
+            //模拟按钮点击清空
+            $(".fileinput-remove-button").click();
+            $('#headerChangeModal').modal('hide');
+            //alert("上传成功");
+        }else{
+            alert("上传失败");
+        }
     });
 
     function changeHeader(){

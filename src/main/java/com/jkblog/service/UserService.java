@@ -2,6 +2,8 @@ package com.jkblog.service;
 
 import com.jkblog.bean.Blog;
 import com.jkblog.bean.BlogUser;
+import com.jkblog.bean.UserHeadPic;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,4 +20,16 @@ public interface UserService {
     public int insertUser(BlogUser blogUser);
 
     public String checkUserIsOccupied(String userName);
+
+    public BlogUser getBlogUserById(Integer blogUserId);
+
+    public String getBlogUserAllInfosById(Model model, Integer blogUserId);
+
+    public void getUserHeader(Integer userId,HttpServletResponse response);
+
+    public int insertOrUpdateUserHeader(UserHeadPic userHeadPic);
+
+    public String getBlogsByUserId(Integer userId, Integer page, Integer pageSize,Model model);
+
+    public int updateUserInfo(BlogUser user);
 }

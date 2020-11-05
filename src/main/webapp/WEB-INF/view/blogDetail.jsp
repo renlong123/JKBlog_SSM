@@ -56,16 +56,21 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-9">
-            <div class="alert alert-info" role="alert">
+            <div class="alert alert-heading border border-0" role="alert">
                 <h3 class="alert-heading">
-                    ${requestScope.allInfo.blog.blogTitle}
+                    ${requestScope.blog.blogTitle}
                 </h3>
                 <hr>
                 <p class="mb-0 smallfont" >
                     发布时间：
-                    <fmt:formatDate value="${requestScope.allInfo.blog.blogEditTime}" pattern="yyyy-MM-dd HH:mm:ss"/>&nbsp;&nbsp;&nbsp;&nbsp;
-                    阅读数：${requestScope.allInfo.blog.blogReadTimes} &nbsp;&nbsp;&nbsp;&nbsp;
-                    评论数：${requestScope.allInfo.blog.blogCommentTimes}
+                    <fmt:formatDate value="${requestScope.blog.blogEditTime}" pattern="yyyy-MM-dd HH:mm:ss"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                    阅读数：${requestScope.blog.blogReadTimes} &nbsp;&nbsp;&nbsp;&nbsp;
+                    评论数：${requestScope.blog.blogCommentTimes}
+                </p>
+                <p class="mb-0 smallfont" >
+                    <c:forEach items="${requestScope.labels}" var="label">
+                        <span class="badge badge-success">${label.blogLabel.labelName}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </c:forEach>
                 </p>
             </div>
 
@@ -73,14 +78,14 @@
             <div class="card content">
                 <div class="card-body">
                     <p>
-                        ${requestScope.allInfo.blog.blogContent}
+                        ${requestScope.blog.blogContent}
                     </p>
                 </div>
             </div>
 
             <div id="levelOne">
             <%--评论--%>
-            <c:forEach items="${requestScope.allInfo.blogComments}" var="blogComment">
+            <c:forEach items="${requestScope.blogComments}" var="blogComment">
 
                 <div style="height: 10px"></div>
 
@@ -88,10 +93,10 @@
                     <div class="card-body">
                         <p class="titleInText" onclick="">
                             <div class="row" style="margin-left: 8px">
-                                <img src="headerpic?userId=${blogComment.commentUserId}" class="rounded card-img-top" alt="头像不见了"
+                                <img src="user/header/${blogComment.blogCommentUserId}" class="rounded card-img-top" alt="头像不见了"
                                      style="width: 20px;height: 20px">
                                  &nbsp;&nbsp;&nbsp;
-                                <a href="#" class="mylink" >${blogComment.commentUserName}</a>
+                                <a href="#" class="mylink" >${blogComment.blogCommentUserName}</a>
                             </div>
                         </p>
                         <hr/>
@@ -100,9 +105,9 @@
                         </p>
                         <p class="statusInText">
                             <span class="badge badge-primary">发表时间：
-                                <fmt:formatDate value="${blogComment.commentTime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>
+                                <fmt:formatDate value="${blogComment.blogCommentTime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>
                             </span>
-                            <span class="badge badge-success">子评论数：${blogComment.commentSonCount}</span>
+                            <span class="badge badge-success">子评论数：${blogComment.blogCommentSonCount}</span>
                         </p>
 
                         <div class="sonCommentPanelSon" hidden="hidden">
@@ -114,10 +119,10 @@
                         </div>
 
                         <div>
-                            <c:if test="${blogComment.commentSonCount == 0}">
+                            <c:if test="${blogComment.blogCommentSonCount == 0}">
                                 <label class="invalidLink">展开</label>
                             </c:if>
-                            <c:if test="${blogComment.commentSonCount != 0}">
+                            <c:if test="${blogComment.blogCommentSonCount != 0}">
                                 <label class="mylink" onclick="getTogleDetailComments($(this),${blogComment.blogCommentId})">展开</label>
                             </c:if>
                             &nbsp;&nbsp;&nbsp;
@@ -126,7 +131,7 @@
                                 <p class="contentInText">
                                     <textarea class="form-control" rows="4" placeholder="开始评论吧"></textarea>
                                 </p>
-                                <button type="button" class="btn btn-success" onclick="publishComment($(this),${blogComment.blogCommentId})">发表评论</button>
+                                <button type="button" class="btn btn-success" onclick="publishComment($(this),${blogComment.blogCommentId},${blogComment.blogCommentId})">发表评论</button>
                             </div>
                         </div>
                     </div>
@@ -139,7 +144,7 @@
                 <div class="card-body">
                     <p class="titleInText">
                     <div class="row" style="margin-left: 8px">
-                        <img src="headerpic?userId=${sessionScope.userId}" class="img-fluid" alt="头像不见了"
+                        <img src="user/header/${sessionScope.userId}" class="img-fluid" alt="头像不见了"
                              style="width: 20px;height: 20px">
                         &nbsp;&nbsp;&nbsp;
                         <a href="#" class="mylink" >${sessionScope.userName}</a>
@@ -149,26 +154,34 @@
                     <p class="contentInText">
                         <textarea class="form-control" rows="4" placeholder="开始评论吧" id="userCommentId"></textarea>
                     </p>
-                    <button type="button" class="btn btn-success" onclick="publishComment($(this),0)">发表评论</button>
+                    <button type="button" class="btn btn-success" onclick="publishComment($(this),0,0)">发表评论</button>
                 </div>
             </div>
         </div>
         <div class="col-3">
             <div style="padding-left: 1rem">
                 <div class="card">
+                    <div style="height: 10px"></div>
                     <div class="text-center">
-                        <img src="resources/img/javalogo.jpg" class="rounded card-img-top" alt="头像不见了" style="width: 50px;height: 50px">
+                        <img src="user/header/${requestScope.user.userId}" class="rounded card-img-top" alt="头像不见了" style="width: 50px;height: 50px">
                     </div>
                     <div class="card-body text-center">
-                        <h5 class="card-title">${requestScope.allInfo.user.userName}</h5>
+                        <h5 class="card-title">${requestScope.user.userName}</h5>
                         <p class="card-text">
-                            <span class="badge badge-secondary">${requestScope.allInfo.user.userGender}</span>
+                            <span class="badge badge-secondary">
+                                <c:if test="${requestScope.user.userGender == '1'}">
+                                    男
+                                </c:if>
+                                <c:if test="${requestScope.user.userGender == '2'}">
+                                    女
+                                </c:if>
+                            </span>
                             <span class="badge badge-secondary">
                                 加入时间:
-                                <fmt:formatDate value="${requestScope.allInfo.user.userCreateTime}" pattern="yyyy-MM-dd"/>
+                                <fmt:formatDate value="${requestScope.user.userCreateTime}" pattern="yyyy-MM-dd"/>
                             </span>
                         </p>
-                        <p class="card-text">${requestScope.allInfo.user.userDescription}</p>
+                        <p class="card-text">${requestScope.user.userDescription}</p>
                         <a href="#" class="btn btn-primary">加关注</a>
                     </div>
                 </div>
@@ -226,7 +239,7 @@
 
 
     $(function () {
-        ${blogComment.commentSonCount}
+        ${blogComment.blogCommentSonCount}
     });
 
     /*点击展开后显示所有博客*/
@@ -250,7 +263,7 @@
                 alert(2);*/
                 $.ajax({
                     type: "GET",
-                    url: "comment?blogCommentId="+commentId,
+                    url: "comment/get/"+commentId,
                     dataType: "json",
                     success: function (result) {
                         //alert(result);
@@ -288,11 +301,12 @@
                     //alert(blogCommentContents);
                     $.ajax({
                         type: "POST",
-                        url: "comment",
+                        url: "comment/add",
                         data: {
                             "blogCommentContents": blogCommentContents,
-                            "commentBlogId": "${requestScope.allInfo.blog.blogId}",
-                            "commentFather": value.blogCommentId
+                            "blogCommentBlogId": "${requestScope.blog.blogId}",
+                            "blogCommentBlogSonId": commentId,
+                            "blogCommentFather": value.blogCommentId
                         },
                         success: function (result) {
                             if(result == "success"){
@@ -310,21 +324,21 @@
 
             var divs = $("<div></div>");
             var content;
-            if(commentId == value.commentFather){
-                content = "<a href='homepage?userId='"+value.commentUserId+" >"+value.commentUserName+"</a>: "/*+
+            if(commentId == value.blogCommentFather){
+                content = "<a href='user/home/"+value.blogCommentUserId+"' >"+value.blogCommentUserName+"</a>: "/*+
                     "<label class='mylink' onclick='commentEvent(obj,)'>"+value.blogCommentContents+"</label>"*/;
             }else{
                 var fatherName;
                 var fatherId;
                 $.each(jsonString,function (name1,value1) {
-                    if(value.commentFather == value1.blogCommentId){
-                        fatherName = value1.commentUserName;
-                        fatherId = value1.commentUserId;
+                    if(value.blogCommentFather == value1.blogCommentId){
+                        fatherName = value1.blogCommentUserName;
+                        fatherId = value1.blogCommentUserId;
                         return false;
                     }
                 });
-                content = "<a href='homepage?userId='"+value.commentUserId+" >"+
-                    value.commentUserName+"</a> 回复 <a href='homepage?userId='"+ fatherId +" > "+fatherName+"</a>:"
+                content = "<a href='user/home/"+value.blogCommentUserId+"' >"+
+                    value.blogCommentUserName+"</a> 回复 <a href='user/home/"+ fatherId +"' > "+fatherName+"</a>:"
                 /*"<label class='mylink'>"+value.blogCommentContents+"</label>"*/;
             }
             divs.append(content);
@@ -348,16 +362,17 @@
         }
     }
 
-    function publishComment(obj,father) {
+    function publishComment(obj,father,fatherSon) {
         var blogCommentContents = obj.siblings("p").children().val();
-        //alert("${requestScope.allInfo.blog.blogId}"+ father);
+        //alert("${requestScope.blog.blogId}"+ father);
         $.ajax({
             type: "POST",
-            url: "comment",
+            url: "comment/add",
             data: {
                 "blogCommentContents": blogCommentContents,
-                "commentBlogId": "${requestScope.allInfo.blog.blogId}",
-                "commentFather": father
+                "blogCommentBlogId": "${requestScope.blog.blogId}",
+                "blogCommentBlogSonId": fatherSon,
+                "blogCommentFather": father
             },
             success: function (result) {
                 if(result == "success"){

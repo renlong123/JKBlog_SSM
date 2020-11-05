@@ -24,6 +24,9 @@
     -->
     <result column="blogContent" jdbcType="LONGVARCHAR" property="blogContent" />
   </resultMap>
+
+
+
   <sql id="Example_Where_Clause">
     <!--
       WARNING - @mbg.generated
@@ -429,5 +432,14 @@
       blogCategoryId = #{blogCategoryId,jdbcType=INTEGER},
       blogBriefContent = #{blogBriefContent,jdbcType=VARCHAR}
     where blogId = #{blogId,jdbcType=INTEGER}
+  </update>
+
+  <select id="getImagesById">
+    select blogImages from blogimages where blogId=#{blogId}
+  </select>
+
+  <update id="insertOrUpdateImages">
+    delete from blogimages where blogId=#{bogId};
+    insert into blogimages values(#{id},#{imagesPath})
   </update>
 </mapper>

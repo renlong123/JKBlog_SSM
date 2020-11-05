@@ -198,10 +198,14 @@
     const editor = new E('#div1')
     // 或者 const editor = new E( document.getElementById('div1') )
     editor.config.zIndex = 500
+    editor.config.height = 650
     /*上传图片路径*/
-    editor.config.uploadImgServer = 'image'
+    editor.config.uploadImgServer = 'blog/image'  /*/${requestScope.blog.blogId}*/
     /*图片最大值*/
+    editor.config.uploadImgMaxLength = 5 // 一次最多上传 5 个图片
     editor.config.uploadImgMaxSize = 50 * 1024 * 1024 // 50M
+    editor.config.uploadFileName = 'images'
+    editor.config.uploadImgTimeout = 15 * 1000
     editor.create()
 
 
@@ -230,7 +234,7 @@
                 },
                 success: function (result) {
                     if(result == "success"){
-                        window.location.href = "homepage";
+                        window.location.href = "user/home";
                     }else{
                         alert("出错了，请稍后重试！");
                     }
@@ -251,7 +255,7 @@
                 success: function (result) {
                     alert(result);
                     if(result == "success"){
-                        window.location.href = "homepage";
+                        window.location.href = "user/home/${sessionScope.userId}";
                     }else{
                         alert("出错了，请稍后重试！");
                     }

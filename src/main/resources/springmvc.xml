@@ -67,6 +67,7 @@
         <property name="providerClass" value="org.hibernate.validator.HibernateValidator"></property>
         <property name="validationMessageSource" ref="validationMessageSource"></property>
     </bean>
+
     <bean id="validationMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basenames">
             <list>

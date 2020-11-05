@@ -1,19 +1,25 @@
 package com.jkblog.controller;
 
+import com.google.gson.Gson;
 import com.jkblog.bean.Blog;
 import com.jkblog.service.BlogService;
 import com.jkblog.util.BlogVo;
+import com.jkblog.util.ImageResult;
 import com.sun.xml.internal.bind.v2.runtime.ClassBeanInfoImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
 
 import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
@@ -76,5 +82,37 @@ public class BlogController {
         }
     }
 
+    @RequestMapping("/delete/{blogId}")
+    public String blogDelete(@PathVariable("blogId") Integer blogId){
+        int i = blogService.deleteBlogAndAttachedInfo(blogId);
+        if(i>0){
+            return "redirect:/user/home/";
+        }else{
+            return "redirect:/user/home/";
+        }
+    }
+
+    /**
+     * 获取上传的所有文件，改变文件名，存放至本地磁盘，并将路径映射发回前端。
+     * @param files
+     * @return
+     */
+    @PostMapping("/image")
+    @ResponseBody
+    public String uploadImages(@RequestParam("images")MultipartFile[] files,@PathVariable(value = "blogId",required = false)Integer blogId){
+
+        return blogService.uploadImages(files,blogId);
+    }
+
+    /**
+     * 获取博客详细信息。
+     * @param
+     * @return
+     */
+    @GetMapping("/detail/{blogId}")
+    public String getBlogAllInfos(@PathVariable(value = "blogId",required = false)Integer blogId,Model model){
+
+        return blogService.getBlogAndAttachedInfosIncludeComment(blogId,model);
+    }
 
 }

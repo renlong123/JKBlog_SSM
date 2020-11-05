@@ -4,6 +4,7 @@ import com.jkblog.bean.Blog;
 import com.jkblog.bean.BlogExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 public interface BlogMapper {
     /**
@@ -120,4 +121,14 @@ public interface BlogMapper {
      * @mbg.generated Mon Nov 02 23:27:58 CST 2020
      */
     int updateByPrimaryKey(Blog record);
+
+    int insertOrUpdateImages(Integer blogId,String imagesPath);
+
+    String getImagesById(Integer blogId);
+
+    @Update("update blog set blogCommentTimes=blogCommentTimes+1 where blogId=#{blogId}")
+    int incrementBlogCommentsCount(@Param("blogId")Integer blogId);
+
+    @Update("update blog set blogCommentTimes=blogCommentTimes-1 where blogId=#{blogId} and blogCommentTimes > 0")
+    int decrementBlogCommentsCount(@Param("blogId")Integer blogId);
 }

@@ -150,7 +150,7 @@
         }else{
             $.ajax({
                 type: "GET",
-                url: "namevalidate?userName="+obj.val(),
+                url: "user/name/validate?userName="+obj.val(),
                 success: function (result) {
                     if(result == "false"){
                         obj.siblings(".invalid-feedback").text("用户名应为2-50位字母或数字或中文！");

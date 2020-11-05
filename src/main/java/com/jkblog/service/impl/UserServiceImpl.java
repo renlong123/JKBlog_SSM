@@ -1,16 +1,25 @@
 package com.jkblog.service.impl;
 
+import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
+import com.jkblog.bean.Blog;
 import com.jkblog.bean.BlogUser;
+import com.jkblog.bean.UserHeadPic;
+import com.jkblog.dao.BlogDao;
 import com.jkblog.dao.BlogUserDao;
+import com.jkblog.mapper.UserHeaderMapper;
 import com.jkblog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.OutputStream;
 
 @Service
 @Slf4j
@@ -18,6 +27,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BlogUserDao userDao;
+
+    @Autowired
+    private BlogDao blogDao;
+
+    @Autowired
+    private UserHeaderMapper userHeaderMapper;
 
     /**
      * 处理用户登录，根据不同请求跳转到不同的页面
@@ -50,7 +65,7 @@ public class UserServiceImpl implements UserService {
                     response.addCookie(cookie);
                 }
                 /*返回主页*/
-                return "redirect:index";
+                return "redirect:/index";
             }else{
                 log.debug("[{}]登录失败，用户名不存在或与密码不匹配",userName);
                 request.setAttribute("loginTips","用户名不存在或与密码不匹配");
@@ -104,6 +119,69 @@ public class UserServiceImpl implements UserService {
         }else {
             return "false";
         }
+    }
+
+    @Override
+    public BlogUser getBlogUserById(Integer blogUserId) {
+        BlogUser blogUser = userDao.getBlogUserByUserId(blogUserId);
+        return blogUser;
+    }
+
+    /**
+     * 查找用户信息及相关的博客信息
+     * @param model
+     * @param blogUserId
+     * @return
+     */
+    @Override
+    public String getBlogUserAllInfosById(Model model, Integer blogUserId) {
+        BlogUser blogUserById = getBlogUserById(blogUserId);
+        model.addAttribute("user",blogUserById);
+        PageInfo userBlogs = blogDao.getBlogsByUserId(blogUserId, 1, 5);
+        model.addAttribute("blogs",userBlogs);
+        return "userHomePage";
+    }
+
+    @Override
+    public void getUserHeader(Integer userId,HttpServletResponse response) {
+        UserHeadPic userHeadPicById = userHeaderMapper.getUserHeadPicById(userId);
+        byte[] headerPic = userHeadPicById.getUserHeaderPic();
+        /*写出到页面*/
+        OutputStream out = null;
+        try {
+            out = response.getOutputStream();
+            out.write(headerPic);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                out.flush();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public int insertOrUpdateUserHeader(UserHeadPic userHeadPic) {
+
+        int i = userDao.insertOrUpdateHeader(userHeadPic);
+        return i;
+    }
+
+    @Override
+    public String getBlogsByUserId(Integer userId, Integer page, Integer pageSize,Model model) {
+        PageInfo blogsByUserId = blogDao.getBlogsByUserId(userId, page, pageSize);
+        model.addAttribute("pageInfo",blogsByUserId);
+        model.addAttribute("pageUserId",userId);
+        return "blogPages";
+    }
+
+    @Override
+    public int updateUserInfo(BlogUser user) {
+        int i = userDao.updateUserInfo(user);
+        return i;
     }
 
 }

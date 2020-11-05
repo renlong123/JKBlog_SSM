@@ -1,13 +1,24 @@
 package com.jkblog.dao.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
 import com.jkblog.bean.Blog;
+import com.jkblog.bean.BlogExample;
 import com.jkblog.dao.BlogDao;
 import com.jkblog.mapper.BlogMapper;
 import com.jkblog.service.BlogService;
+import com.jkblog.util.ImageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class BlogDaoImpl implements BlogDao {
@@ -49,7 +60,44 @@ public class BlogDaoImpl implements BlogDao {
     }
 
     @Override
-    public int deleteBlog(Blog blog) {
+    public int deleteBlog(Integer blogId) {
+        blogMapper.deleteByPrimaryKey(blogId);
         return 0;
     }
+
+    @Override
+    public PageInfo getBlogsByUserId(Integer userId,Integer page,Integer pageSize) {
+        BlogExample example = new BlogExample();
+        example.createCriteria().andBlogUserIdEqualTo(userId);
+        PageHelper.startPage(page, pageSize);
+        List<Blog> blogs = blogMapper.selectByExample(example);
+        PageInfo pageInfo = new PageInfo(blogs);
+        return pageInfo;
+    }
+
+    @Override
+    public int insertOrUpdateImages(Integer id, String imagesPath) {
+
+        return blogMapper.insertOrUpdateImages(id,imagesPath);
+    }
+
+    @Override
+    public String getImagesById(Integer blogId) {
+        String imagesById = blogMapper.getImagesById(blogId);
+        return imagesById;
+    }
+
+    @Override
+    public int incrementBlogCommentsCount(Integer blogId) {
+        int i = blogMapper.incrementBlogCommentsCount(blogId);
+        return i;
+    }
+
+    @Override
+    public int decrementBlogCommentsCount(Integer blogId) {
+        int i = blogMapper.decrementBlogCommentsCount(blogId);
+        return i;
+    }
+
+
 }

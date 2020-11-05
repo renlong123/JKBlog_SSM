@@ -106,7 +106,7 @@
         <p class="lead">欢迎来到JKBlog,你可以记录学习的心得，知识点，笔记。<br/>这里是值得依赖的地方</p>
         <hr class="my-4">
         <p>加入JKBlog开放更多功能</p>
-        <a class="btn btn-primary btn-lg" href="login" role="button">现在开始</a>
+        <a class="btn btn-primary btn-lg" href="user/login" role="button">现在开始</a>
       </div>
       <%--前三--%>
       <div class="row">
@@ -203,8 +203,8 @@
               <span class="badge badge-primary">阅读数：${blog.blogReadTimes}</span>
               <span class="badge badge-success">评论数：${blog.blogCommentTimes}</span>
             </p>
-            <a href="blogdetail?blogId=${blog.blogId}" class="card-link">查看</a>
-            <a href="blogdetail?blogId=${blog.blogId}" class="card-link">其他</a>
+            <a href="blog/detail/${blog.blogId}" class="card-link">查看</a>
+            <a href="blog/detail/${blog.blogId}" class="card-link">其他</a>
           </div>
         </div>
       </c:forEach>
@@ -243,7 +243,7 @@
 <script>
 
   function contentDetail(blogId) {
-    window.location.href = "blogdetail?blogId="+blogId;
+    window.location.href = "blog/detail/"+blogId;
   }
 
 </script>

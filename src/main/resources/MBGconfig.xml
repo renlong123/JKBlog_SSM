@@ -30,21 +30,21 @@
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
-    <table tableName="blog" domainObjectName="Blog" >
+<!--    <table tableName="blog" domainObjectName="Blog" >
       <property name="useActualColumnNames" value="true"/>
-     <!--  <generatedKey column="id" sqlStatement="MySql" identity="true" />
-      <columnOverride column="number" property="myDefinedNumber" /> -->
-      <!-- <ignoreColumn column="user_id" /> -->
-      <!-- <columnOverride column="note" jdbcType="VARCHAR(50)" /> -->
+     &lt;!&ndash;  <generatedKey column="id" sqlStatement="MySql" identity="true" />
+      <columnOverride column="number" property="myDefinedNumber" /> &ndash;&gt;
+      &lt;!&ndash; <ignoreColumn column="user_id" /> &ndash;&gt;
+      &lt;!&ndash; <columnOverride column="note" jdbcType="VARCHAR(50)" /> &ndash;&gt;
     </table>
     
     <table tableName="blogcategory" domainObjectName="BlogCategory" >
       <property name="useActualColumnNames" value="true"/>
-     <!--  <generatedKey column="id" sqlStatement="MySql" identity="true" />
-      <columnOverride column="number" property="myDefinedNumber" /> -->
-      <!-- <ignoreColumn column="user_id" /> -->
-      <!-- <columnOverride column="note" jdbcType="VARCHAR(50)" /> -->
-    </table>
+     &lt;!&ndash;  <generatedKey column="id" sqlStatement="MySql" identity="true" />
+      <columnOverride column="number" property="myDefinedNumber" /> &ndash;&gt;
+      &lt;!&ndash; <ignoreColumn column="user_id" /> &ndash;&gt;
+      &lt;!&ndash; <columnOverride column="note" jdbcType="VARCHAR(50)" /> &ndash;&gt;
+    </table>-->
     <table tableName="blogcomment" domainObjectName="BlogComment" >
       <property name="useActualColumnNames" value="true"/>
 <!--        <generatedKey column="id" sqlStatement="MySql" identity="true" />
@@ -53,36 +53,38 @@
        <columnOverride column="note" jdbcType="VARCHAR(50)" />-->
     </table>
 
+<!--
     <table tableName="bloglabel" domainObjectName="BlogLabel" >
       <property name="useActualColumnNames" value="true"/>
-      <!--  <generatedKey column="id" sqlStatement="MySql" identity="true" />
-       <columnOverride column="number" property="myDefinedNumber" /> -->
-      <!-- <ignoreColumn column="user_id" /> -->
-      <!-- <columnOverride column="note" jdbcType="VARCHAR(50)" /> -->
+      &lt;!&ndash;  <generatedKey column="id" sqlStatement="MySql" identity="true" />
+       <columnOverride column="number" property="myDefinedNumber" /> &ndash;&gt;
+      &lt;!&ndash; <ignoreColumn column="user_id" /> &ndash;&gt;
+      &lt;!&ndash; <columnOverride column="note" jdbcType="VARCHAR(50)" /> &ndash;&gt;
     </table>
 
     <table tableName="bloglabelmap" domainObjectName="BlogLabelMap" >
       <property name="useActualColumnNames" value="true"/>
-      <!--  <generatedKey column="id" sqlStatement="MySql" identity="true" />
-       <columnOverride column="number" property="myDefinedNumber" /> -->
-      <!-- <ignoreColumn column="user_id" /> -->
-      <!-- <columnOverride column="note" jdbcType="VARCHAR(50)" /> -->
+      &lt;!&ndash;  <generatedKey column="id" sqlStatement="MySql" identity="true" />
+       <columnOverride column="number" property="myDefinedNumber" /> &ndash;&gt;
+      &lt;!&ndash; <ignoreColumn column="user_id" /> &ndash;&gt;
+      &lt;!&ndash; <columnOverride column="note" jdbcType="VARCHAR(50)" /> &ndash;&gt;
     </table>
 
     <table tableName="bloguser" domainObjectName="BlogUser" >
       <property name="useActualColumnNames" value="true"/>
-      <!--  <generatedKey column="id" sqlStatement="MySql" identity="true" />
-       <columnOverride column="number" property="myDefinedNumber" /> -->
-      <!-- <ignoreColumn column="user_id" /> -->
-      <!-- <columnOverride column="note" jdbcType="VARCHAR(50)" /> -->
+      &lt;!&ndash;  <generatedKey column="id" sqlStatement="MySql" identity="true" />
+       <columnOverride column="number" property="myDefinedNumber" /> &ndash;&gt;
+      &lt;!&ndash; <ignoreColumn column="user_id" /> &ndash;&gt;
+      &lt;!&ndash; <columnOverride column="note" jdbcType="VARCHAR(50)" /> &ndash;&gt;
     </table>
     <table tableName="followfanmap" domainObjectName="FollowFanMap" >
       <property name="useActualColumnNames" value="true"/>
-      <!--  <generatedKey column="id" sqlStatement="MySql" identity="true" />
-       <columnOverride column="number" property="myDefinedNumber" /> -->
-      <!-- <ignoreColumn column="user_id" /> -->
-      <!-- <columnOverride column="note" jdbcType="VARCHAR(50)" /> -->
+      &lt;!&ndash;  <generatedKey column="id" sqlStatement="MySql" identity="true" />
+       <columnOverride column="number" property="myDefinedNumber" /> &ndash;&gt;
+      &lt;!&ndash; <ignoreColumn column="user_id" /> &ndash;&gt;
+      &lt;!&ndash; <columnOverride column="note" jdbcType="VARCHAR(50)" /> &ndash;&gt;
     </table>
+-->
 
   </context>
 </generatorConfiguration>

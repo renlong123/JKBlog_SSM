@@ -59,7 +59,7 @@
 
 <div class="container-fluid">
     <h3 class="incenter">修改个人信息</h3>
-    <form action="userinfo" method="post">
+    <form action="user/info" method="post">
         <div class="form-group row" id="validateUserName">
             <label for="inputUserName" class="col-sm-2 col-form-label">用户名</label>
             <div class="col-sm-10">
@@ -95,7 +95,7 @@
         <div class="form-group row" id="validatebirth">
             <label for="validationBirthDay" class="col-sm-2 col-form-label">出生日期</label>
             <div class="col-sm-10">
-                <input class="form-control" id="validationBirthDay" required name="userBirthDay">
+                <input class="form-control" id="validationBirthDay" required name="userBirthDayInfo">
             </div>
         </div>
         <fieldset class="form-group">
@@ -103,10 +103,10 @@
                 <legend class="col-form-label col-sm-2 pt-0">性别</legend>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <c:if test="${requestScope.user.userGender == '无'}">
+                        <c:if test="${requestScope.user.userGender == '0'}">
                             <input class="form-check-input" type="radio" name="userGender" id="gridRadios1" value="0" checked>
                         </c:if>
-                        <c:if test="${requestScope.user.userGender != '无'}">
+                        <c:if test="${requestScope.user.userGender != '0'}">
                             <input class="form-check-input" type="radio" name="userGender" id="gridRadios1" value="0">
                         </c:if>
                         <label class="form-check-label" for="gridRadios1">
@@ -114,10 +114,10 @@
                         </label>
                     </div>
                     <div class="form-check">
-                        <c:if test="${requestScope.user.userGender == '男'}">
+                        <c:if test="${requestScope.user.userGender == '1'}">
                             <input class="form-check-input" type="radio" name="userGender" id="gridRadios2" value="1" checked>
                         </c:if>
-                        <c:if test="${requestScope.user.userGender != '男'}">
+                        <c:if test="${requestScope.user.userGender != '1'}">
                             <input class="form-check-input" type="radio" name="userGender" id="gridRadios2" value="1">
                         </c:if>
                         <label class="form-check-label" for="gridRadios2">
@@ -125,10 +125,10 @@
                         </label>
                     </div>
                     <div class="form-check">
-                        <c:if test="${requestScope.user.userGender == '女'}">
+                        <c:if test="${requestScope.user.userGender == '2'}">
                             <input class="form-check-input" type="radio" name="userGender" id="gridRadios3" value="2" checked>
                         </c:if>
-                        <c:if test="${requestScope.user.userGender != '女'}">
+                        <c:if test="${requestScope.user.userGender != '2'}">
                             <input class="form-check-input" type="radio" name="userGender" id="gridRadios3" value="2">
                         </c:if>
                         <label class="form-check-label" for="gridRadios3">
@@ -181,7 +181,7 @@
     });
 
    $(function () {
-       var birthday = "${requestScope.user.userBirthDay}";
+       var birthday = "<fmt:formatDate value="${requestScope.user.userBirthDay}" pattern="yyyy-MM-dd"></fmt:formatDate>";
        if(birthday == ""){
            var date = new Date();
            var y = date.getFullYear();
@@ -203,7 +203,7 @@
         }else{
             $.ajax({
                 type: "GET",
-                url: "namevalidate?userName="+obj.val(),
+                url: "user/name/validate?userName="+obj.val(),
                 success: function (result) {
                     if(result == "yes"){
                         obj.siblings(".invalid-feedback").text("用户名应为2-50位字母或数字或中文！");

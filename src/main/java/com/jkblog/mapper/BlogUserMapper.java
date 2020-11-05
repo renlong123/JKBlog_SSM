@@ -2,8 +2,11 @@ package com.jkblog.mapper;
 
 import com.jkblog.bean.BlogUser;
 import com.jkblog.bean.BlogUserExample;
+
+import java.io.InputStream;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 public interface BlogUserMapper {
     /**
@@ -93,4 +96,10 @@ public interface BlogUserMapper {
      * @mbg.generated Mon Nov 02 23:27:58 CST 2020
      */
     int updateByPrimaryKey(BlogUser record);
+
+    @Update("update bloguser set userBlogCount=userBlogCount-1 where userId=#{userId} and userBlogCount>0")
+    int decrementUserBlogsCountById(Integer userId);
+
+    @Update("update bloguser set userBlogCount=userBlogCount+1 where userId=#{userId}")
+    int incrementUserBlogsCountById(Integer userId);
 }

@@ -60,18 +60,18 @@
                 <ul class="navbar-nav mr-auto">
                     <c:if test="${sessionScope.userName == null}">
                         <li class="nav-item">
-                            <a class="nav-link" href="login">登录</a>
+                            <a class="nav-link" href="user/login">登录</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="register">注册</a>
+                            <a class="nav-link" href="user/register">注册</a>
                         </li>
                     </c:if>
                     <c:if test="${sessionScope.userName != null}">
                         <li class="nav-item">
-                            <a class="nav-link" href="homepage?userId=${sessionScope.userId}">${sessionScope.userName}</a>
+                            <a class="nav-link" href="user/home/${sessionScope.userId}">${sessionScope.userName}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="loginout">退出</a>
+                            <a class="nav-link" href="user/loginout">退出</a>
                         </li>
                     </c:if>
                 </ul>

@@ -4,6 +4,7 @@ import com.jkblog.bean.BlogCategory;
 import com.jkblog.bean.BlogCategoryExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 public interface BlogCategoryMapper {
     /**
@@ -97,4 +98,8 @@ public interface BlogCategoryMapper {
      * @mbg.generated Mon Nov 02 23:27:58 CST 2020
      */
     int updateByPrimaryKey(BlogCategory record);
+
+
+    @Update("update blogcategory set categoryCount=categoryCount-1 where categoryId=#{categoryId} and categoryCount>0")
+    int decrementCategoryById(Integer categoryId);
 }
