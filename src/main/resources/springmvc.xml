@@ -48,16 +48,16 @@
         </mvc:interceptor>
         <!--没登录不允许访问-->
         <mvc:interceptor>
-            <mvc:mapping path="/blogedit"/>
-            <mvc:mapping path="/loginout"/>
-            <mvc:mapping path="/blogdelete"/>
-            <mvc:mapping path="/userinfo"/>
+            <mvc:mapping path="/blog/edit/*"/>
+            <mvc:mapping path="/user/loginout"/>
+            <mvc:mapping path="/blog/delete"/>
+            <mvc:mapping path="/user/info"/>
             <bean class="com.jkblog.interceptor.UnLoginedInterceptor"></bean>
         </mvc:interceptor>
         <!--登陆了不允许访问-->
         <mvc:interceptor>
-            <mvc:mapping path="/register"/>
-            <mvc:mapping path="/login"/>
+            <mvc:mapping path="/user/register"/>
+            <mvc:mapping path="/user/login"/>
             <bean class="com.jkblog.interceptor.LoginedInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>

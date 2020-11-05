@@ -17,7 +17,7 @@ public class LoginedInterceptor implements HandlerInterceptor {
             return true;
         }else {
             /*已经登陆了跳转到个人主页*/
-            response.sendRedirect("homepage");
+            response.sendRedirect("home/"+userId);
             return false;
         }
     }

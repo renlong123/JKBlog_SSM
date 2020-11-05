@@ -83,13 +83,9 @@ public class BlogController {
     }
 
     @RequestMapping("/delete/{blogId}")
-    public String blogDelete(@PathVariable("blogId") Integer blogId){
+    public String blogDelete(@PathVariable("blogId") Integer blogId,HttpSession session){
         int i = blogService.deleteBlogAndAttachedInfo(blogId);
-        if(i>0){
-            return "redirect:/user/home/";
-        }else{
-            return "redirect:/user/home/";
-        }
+        return "redirect:/user/home/"+session.getAttribute("userId");
     }
 
     /**
