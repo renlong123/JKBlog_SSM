@@ -12,7 +12,7 @@ public interface BlogService {
 
     public String getBlogAndAttachedInfos(Integer blogId, Model model);
 
-    public int insertBlog(Blog blog,List<Integer> labelIds, HttpSession session);
+    public int insertBlog(Blog blog,List<Integer> labelIds, HttpSession session) throws Exception;
 
     public int updateBlog(Blog blog ,List<Integer> labelIds) throws Exception;
 

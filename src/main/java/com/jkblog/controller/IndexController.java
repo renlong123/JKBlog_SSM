@@ -6,9 +6,7 @@ import com.jkblog.service.IndexService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +27,17 @@ public class IndexController {
         List<Blog> hotBlogs = indexService.getBriefHotBlogs();
         request.setAttribute("blogs",hotBlogs);
         return "index";
+    }
+
+    @RequestMapping("/error/{errorId}")
+    public String errorHandler(@PathVariable("errorId")String errorId) throws Exception {
+        if(errorId.equals("404")){
+            throw new Exception("404");
+        }else if(errorId.equals("500")){
+            throw new Exception("500");
+        }else{
+            throw new Exception("出错了");
+        }
     }
 
 }

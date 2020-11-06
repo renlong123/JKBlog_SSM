@@ -10,6 +10,9 @@ import com.jkblog.util.ImageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
@@ -74,7 +77,8 @@ public class BlogServiceImpl implements BlogService{
     }
 
     @Override
-    public int insertBlog(Blog blog,List<Integer> labelIds, HttpSession session) {
+    @Transactional(timeout = 3,isolation = Isolation.READ_COMMITTED,propagation = Propagation.REQUIRED)
+    public int insertBlog(Blog blog,List<Integer> labelIds, HttpSession session) throws Exception {
 
         blog.setBlogEditTime(new Date());
         blog.setBlogUserId((Integer)session.getAttribute("userId"));
@@ -83,12 +87,21 @@ public class BlogServiceImpl implements BlogService{
                 replaceAll("<","").replaceAll(">",""));
         /*插入博客*/
         int i = blogDao.insertBlog(blog);
+        if(i!=1){
+            throw new Exception("博客插入错误");
+        }
         /*更新博客标签*/
         int i1 = blogLabelMapDao.insertMaps(labelIds, blog.getBlogId());
         /*更新所属分类下的文章数目*/
         int i2 = blogCategoryDao.updateCategoryCountById(blog.getBlogCategoryId());
+        if(i!=1){
+            throw new Exception("博客插入错误");
+        }
         /*更新作者文章数*/
         int i3 = blogUserDao.incrementUserBlogsCountById(blog.getBlogUserId());
+        if(i!=1){
+            throw new Exception("博客插入错误");
+        }
 
         return i+i1+i2+i3;
     }

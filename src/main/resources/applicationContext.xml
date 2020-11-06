@@ -2,9 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!--开启组件扫描，会将带@service@component等注解的类自动注入-->
     <context:component-scan base-package="com.jkblog">
@@ -25,7 +25,7 @@
     <!---->
 <!--    <mybatis:scan base-package="com.jkblog.mapper"/>-->
     <!--使用mybatis-spring与spring整合，至少需要配置sqlSessionFactory与数据映射器类-->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <bean id="sqlSessionFactory" name="hahhaha;hehehhe;aidifjd" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"></property>
         <!--配置mybatis配置文件位置-->
         <property name="configLocation" value="classpath:mybatis.xml"></property>
@@ -46,5 +46,5 @@
         <constructor-arg ref="dataSource"></constructor-arg>
     </bean>
 
-
+    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
 </beans>
