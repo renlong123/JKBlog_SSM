@@ -5,6 +5,7 @@ import com.jkblog.bean.BlogCommentExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 public interface BlogCommentMapper {
     /**
@@ -95,8 +96,10 @@ public interface BlogCommentMapper {
      */
     int updateByPrimaryKey(BlogComment record);
 
-    int updateSonCount(Integer blogSonId);
 
-    @Select("")
+    @Update("update blogcomment set blogCommentSonCount=blogCommentSonCount+1 where blogCommentId=#{blogSonId}")
+    int updateSonCount(@Param("blogSonId") Integer blogSonId);
+
+    @Select("select * from blogcomment where blogCommentBlogSonId=#{fatherId}")
     List<BlogComment> getCommentsByFather(Integer fatherId);
 }
